@@ -2,9 +2,10 @@
 
 When a home cook can't cook, this tool finds the affected orders, proposes backup cooks, writes one message per subscriber, and tracks the outcome. It also gives leadership a one-page view of dropouts by city and cook.
 
-**Live demo:** TODO (deployed URL)
-**Build log:** TODO (link)
-**PRD:** TODO (link)
+**Live demo:** :https://tiffin-loop-app.vercel.app/
+**Build log:** 
+- ChatGPT(BrainStorming): https://chatgpt.com/share/6ac69cce-3abc-83ec-9332-b0666f6ea133
+- Claude(Building): https://claude.ai/share/d2f18a79-814f-44e3-a72e-fefcb23b1c2e
 
 > Built as a 4-hour prototype for the assignment. Messages are simulated, not sent to real phones.
 
