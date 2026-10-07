@@ -1,26 +1,166 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --ink: #0f172a;
+  --ink-soft: #475569;
+  --line: #e2e8f0;
+  --accent: #2563eb;
+  --accent-ring: rgba(37, 99, 235, 0.35);
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'cv11', 'ss01', 'cv05';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background:
+      radial-gradient(1200px 400px at 10% -10%, rgba(37, 99, 235, 0.06), transparent 60%),
+      radial-gradient(900px 300px at 100% 0%, rgba(14, 165, 233, 0.05), transparent 55%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3 {
+    letter-spacing: -0.015em;
+    font-weight: 650;
+  }
+
+  /* IDs, order numbers and times read better in a monospace face */
+  code, kbd, pre, samp, .font-mono {
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-feature-settings: 'zero', 'calt';
+  }
+
+  /* Aligned digits in tables, badges and KPI numbers */
+  table, td, th, .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  th {
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  tbody tr {
+    transition: background-color 120ms ease;
+  }
+  tbody tr:hover {
+    background-color: rgba(241, 245, 249, 0.7);
+  }
+
+  a {
+    text-underline-offset: 3px;
+    transition: color 120ms ease;
+  }
+
+  blockquote {
+    border-radius: 0 0.5rem 0.5rem 0;
+    background: rgba(248, 250, 252, 0.8);
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
+
+  /* Buttons: tactile and obvious, without fighting Tailwind utility classes */
+  button {
+    cursor: pointer;
+    transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease,
+      transform 80ms ease, opacity 140ms ease;
+  }
+  button:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  /* Clear keyboard focus everywhere */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-ring);
+  }
+
+  /* Expandable rows on the Data quality page */
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::before {
+    content: '▸';
+    display: inline-block;
+    width: 1em;
+    margin-right: 0.25rem;
+    color: #94a3b8;
+    transition: transform 150ms ease;
+  }
+  details[open] > summary::before {
+    transform: rotate(90deg);
+  }
+
+  ::selection {
+    background: rgba(37, 99, 235, 0.18);
+  }
+
+  /* Calm, thin scrollbars for wide tables and the workflow strip */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+  *::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Soft card lift used by the existing white panels */
+  section.rounded-lg {
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px -8px rgba(15, 23, 42, 0.08);
+  }
+  header.border-b {
+    backdrop-filter: saturate(1.4) blur(8px);
+  }
+}
+
+/* Gentle entrance for each page */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+main {
+  animation: page-in 260ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  main { animation: none; }
+  button, tbody tr, a { transition: none; }
+}
+
+@media print {
+  body { background: #fff; }
+  button, nav { display: none !important; }
 }
